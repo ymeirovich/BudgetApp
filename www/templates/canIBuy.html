@@ -1,0 +1,53 @@
+<ion-view title="Can I Buy" id="page4" class=" ">
+    <ion-content padding="true" class="has-header">
+        <div class="list card " id="canIBuy-card22">
+            <ion-item class="item-icon-left item-icon-right  " id="canIBuy-list-item5">
+                <i class="icon ion-cash"></i>What can I buy today?
+                <i class="icon ion-android-arrow-forward"></i>
+            </ion-item>
+            <div class="item item-body " id="canIBuy-list-item-container2">
+                <form id="canIBuy-form1" class="list ">
+                    <div>
+                        <p>
+                            <b>Slide the range to select the approximate amount of your purchase</b>
+                        </p>
+                    </div>
+                    <ion-item class="range range-positive " id="canIBuy-range1">Amount
+                        <input type="range" value="50" min="0" max="100" name="Amount">
+                    </ion-item>
+                </form>
+                <form id="canIBuy-form4" class="list ">
+                    <label class="item item-input " id="canIBuy-input1" name="Purchase_Date">
+                        <span class="input-label">Date</span>
+                        <input type="date" placeholder="Select a date">
+                    </label>
+                </form>
+                <form id="canIBuy-form5" class="list ">
+                    <ion-toggle toggle-class="toggle-positive" ng-checked="true" id="canIBuy-toggle1" name="Location" class=" ">Location</ion-toggle>
+                </form>
+                <ion-list id="canIBuy-list4" class=" ">
+                    <ion-item class="item-icon-left item-icon-right  " id="canIBuy-list-item22">
+                        <i class="icon ion-camera"></i>Attach Receipt
+                        <i class="icon ion-android-add"></i>
+                    </ion-item>
+                </ion-list>
+                <p id="canIBuy-markdown1" style="margin-top:0px;color:#000000;" class=" ">Some friendly
+                    <strong>markdown</strong>
+                </p>
+            </div>
+        </div>
+        <div>
+            <p>
+                <b>Select a category below to apply to your purchase</b>
+            </p>
+        </div>
+        <ion-list id="canIBuy-list1" class=" ">
+            <ion-item id="canIBuy-list-item9" class="  positive-health">Entertainment</ion-item>
+            <ion-item id="canIBuy-list-item10" class="  warning-health">Groceries</ion-item>
+            <ion-item id="canIBuy-list-item11" class="  negative-health">Home Supplies</ion-item>
+            <ion-item id="canIBuy-list-item18" class="  warning-health">Transportation</ion-item>
+            <ion-item id="canIBuy-list-item19" class="  positive-health">Gas</ion-item>
+            <ion-item id="canIBuy-list-item20" class="  warning-health">Electricity</ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,70 @@
+<style>
+.icon{
+font-size: 30px;
+}
+</style>
+<ion-view title="Account" id="page12" class=" ">
+<ion-content padding="true" class="has-header">
+<ion-list>
+<ion-item >
+<div class="list">
+    <div class="item item-divider">
+        Personal Information
+    </div>
+    <label class="item item-input item-floating-label">
+        <label class="">Name</label>
+        <div ng-bind="AccountCtrl.properties.profile.displayName"></div>
+    </label>
+    <label class="item item-input item-floating-label">
+        <label class="">Email</label>
+        <div ng-bind="AccountCtrl.properties.profile.email"></div>
+    </label>
+</div>
+</ion-item>
+<ion-item >
+<div class="list">
+    <div class="item item-divider">
+        <div class=row>
+            <div class=col>
+                Friends
+            </div>
+            <div class=col-10>
+                <a href="" ng-click="AccountCtrl.actions.addFriend()" id="account-add-friends" class=" button button-calm  button-block icon ion-plus"></a>
+            </div>
+        </div>
+    </div>
+    <div ng-repeat="rec in AccountCtrl.properties.friends" class="grid">
+        <div class="row">
+            <div class=col>
+                <label class="item item-input item-floating-label" >
+                    <span class="input-label">Email</span>
+                    <input type="email" placeholder="Email" ng-model="rec.email">
+                </label>
+            </div>
+            <div class="col-20 ">
+                <span>
+                    Permission to View
+                </span>                
+            </div>
+            <div class="col-20">
+                <label class="toggle toggle-assertive ">
+                    <input type="checkbox" ng-model="rec.permissionToView">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </div>
+            <div class="col-10">
+                    <button class="button icon ion-trash-a" ng-click="AccountCtrl.actions.deleteFriend(rec)"></button>
+            </div>
+        </div>
+        <div class="row">
+            
+        </div>
+    </div>
+</div>
+</ion-item>
+</ion-list>
+<a href="" id="account-save-changes" class=" button button-calm  button-block " ng-click="AccountCtrl.actions.saveChanges()"> Save Changes</a>
+</ion-content>
+</ion-view>

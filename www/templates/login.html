@@ -1,0 +1,29 @@
+<ion-view title="Login" id="page5" class=" ">
+<ion-content padding="true" class="has-header">
+<div class=row>
+    <div class=col>
+        <button style="background: url('img/google signin.png');height: 100px;max-width: 100%;width:480px"
+        ng-click="LoginCtrl.login()">
+        </button>
+    </div>
+    <span ng-show="LoginCtrl.Auth.currentUserId">
+        {{ LoginCtrl.Auth.firebaseAuth.getAuth().name }} | <a href="#" ng-click="LoginCtrl.Auth.firebaseAuth.$signOut()">Logout</a>
+    </span>
+</div>
+<!--  <form id="login-form6" class="list ">
+    <ion-list id="login-list5" class=" ">
+    <label class="item item-input " id="login-input2">
+        <span class="input-label">Username</span>
+        <input type="text" placeholder="">
+    </label>
+    <label class="item item-input " id="login-input3">
+        <span class="input-label">Password</span>
+        <input type="password" placeholder="">
+    </label>
+    </ion-list>
+    <div class="spacer" style="height: 40px;"></div>
+    <button id="login-button4" class=" button button-stable  button-block ">Log in</button>
+    <a ui-sref="signup" id="login-button5" class=" button button-positive  button-block button-clear ">Or create an account</a>
+</form> -->
+</ion-content>
+</ion-view>

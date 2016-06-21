@@ -1,0 +1,91 @@
+<ion-view title="Import Records" id="page6" class=" image">
+<ion-content padding="true" class="has-header">
+<div class="row row-center">
+    <div class="col"></div>
+    <div class="error-container last-error-container" ng-hide="ImportRecordsCtrl.properties.loggedIn" role="alert">
+        <div>You are currently logged out. Please log in again.</div>
+    </div>
+</div>
+<div class="row row-center">
+    <div class=col><button id="importRecords-button6" ng-click="ImportRecordsCtrl.actions.openFileDialog()" class=" button button-calm  button-block icon-left ion-ios-upload " ng-disabled="ImportRecordsCtrl.properties.fileName">Upload File</button></div>
+</div>
+<div class="row row-center">
+    <div class=col><strong>Account Type</strong>
+        <select name="selected_account_type" ng-model="ImportRecordsCtrl.properties.selected_bank_profile"
+            ng-options="rec.account_type_id as rec.name for rec in ImportRecordsCtrl.properties.BANK_PROFILES">
+            <option value="">-Select-</option>
+        </select></div>
+    </div>
+    <div class=col>
+        
+    </div>
+</div>
+<div class="row">
+    <div class="col col-100 text-center">
+        <div class="text-center">
+            <div id="filename">{{ ImportRecordsCtrl.properties.fileName }}</div>
+        </div>
+    </div>
+</div>
+<input type="file" id="file"/>
+<div  class="item item-body " id="importRecords-list-item-container6" >
+    <ion-list id="importRecords-list7" class=" ">
+    <label class = "item item-input item-select item-light">
+        <div class = "input-label">
+            Select account
+        </div>
+        
+        <select name="selected_account" ng-model="ImportRecordsCtrl.properties.selected_account"
+            ng-options="rec.accounts.account_number for rec in ImportRecordsCtrl.properties.import_records">
+        </select>
+        
+    </label>
+    <div class="row center">
+        <button class="button" ng-click="ImportRecordsCtrl.actions.moveRecords()" >
+        Import Records
+        </button>
+        <button class="button" ng-click="ImportRecordsCtrl.actions.deleteAllRecords()" >
+        Delete All Records
+        </button>
+    </div>
+    <ion-checkbox ng-show="ImportRecordsCtrl.properties.selected_account"
+    ng-model="ImportRecordsCtrl.properties.selectedAll"
+    ng-click="ImportRecordsCtrl.actions.checkAll()" > Check All
+    </ion-checkbox>
+    </ion-list>
+    <ion-item class="item-icon-left  " id="importRecords-list-item22"
+    ng-repeat="rec in ImportRecordsCtrl.properties.selected_account.accounts.records">
+    <ion-checkbox dark checked="{{rec.Selected}}" ng-model="rec.Selected">
+    <ion-label>
+    <div>credit:<span>{{rec.credit}}</span></div>
+    <div>debit:<span></span>{{rec.debit}}</div>
+    <div>description:<span>{{rec.description}}</span></div>
+    <div>reference_number:<span>{{rec.reference_number}}</span></div>
+    <div>transaction_date:<span>{{rec.transaction_date}}</span></div>
+    </ion-label>
+    </ion-checkbox>
+    </ion-item>
+    </ion-list>
+</div>
+<!-- <div class="item item-body " id="importRecords-list-item-container4" >
+    <p id="importRecords-markdown4" style="margin-top:0px;color:#000000;" class=" ">Select Header Row control</p>
+    <div class="spacer" style="height: 100px;"></div>
+    <ion-list id="importRecords-list6" class=" ">
+    <ion-item class="item-icon-left  " id="importRecords-list-item21">
+    <i class="icon ion-android-arrow-dropup-circle"></i>Previous Record</ion-item>
+    <ion-item class="item-icon-left  " id="importRecords-list-item25">
+    <i class="icon ion-android-arrow-dropdown-circle"></i>Next Record</ion-item>
+    </ion-list>
+    <button id="importRecords-button8" class=" button button-energized  button-block ">Test Import</button>
+</div>
+<div class="item item-body " id="importRecords-list-item-container5">
+    <p id="importRecords-markdown5" style="margin-top:0px;color:#000000;" class=" ">
+    <strong>Field Mapping</strong>control will go here</p>
+    <div>
+        <div class="grid">test</div>
+    </div>
+    <div class="spacer" style="height: 100px;"></div>
+    <button id="importRecords-button7" class=" button button-balanced  button-block ">Save Records</button>
+</div> -->
+</ion-content>
+</ion-view>

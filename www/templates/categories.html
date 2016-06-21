@@ -1,0 +1,40 @@
+<ion-view title="Categories" id="page10" class=" ">
+<ion-content padding="true" class="has-header" ng-form name="categoriesForm">
+<div class="row">
+    <div class="error-container last-error-container" ng-hide="CategoriesCtrl.properties.loggedIn" role="alert">
+        <div>You are currently logged out. Please log in again.</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <label class="item item-input">
+            <span class="input-label">Category Name</span>
+            <input type="text"
+            name="categoryName"
+            ng-model="CategoriesCtrl.properties.newCategory"
+            ng-enter-key="CategoriesCtrl.actions.addCategories()"
+            >
+        </label></div>
+        <div class="col col-20"> <button id="categories-button1" ng-click="CategoriesCtrl.actions.addCategories()" class=" button button-calm  button-block icon-left ion-ios-plus " style="margin-top:0;">Add Category</button></div>
+    </div>
+    
+    <ion-list id="categories-list12" class=" ">
+    <ion-item class="item-divider " id="categories-list-item-divider3">Category Items</ion-item>
+    <div class="row" ng-repeat="rec in CategoriesCtrl.properties.categoryStore">
+        <div class="col">
+            <ion-item class="item-icon-left  " id="categories-list-item40">
+            {{rec.$value}}
+            </ion-item>
+        </div>
+        <div class="col-20">
+            <button id="categories-button2" ng-click="CategoriesCtrl.actions.deleteCategories(rec)" class=" button button-calm  button-block icon-left ion-ios-trash " >Delete Category</button>
+            <!-- <button id="categories-button3" ng-click="CategoriesCtrl.actions.addCategory()" class=" button button-calm  button-block icon-left ion-ios-plus " style="margin-top:0;">Add Category</button> -->
+        </div>
+    </div>
+    <!-- <label class="item item-input " id="categories-input9">
+        <span class="input-label">Monthly Budget</span>
+        <input type="number" placeholder="">
+    </label> -->
+    </ion-list>
+    </ion-content>
+    </ion-view>

@@ -1,0 +1,38 @@
+<ion-view title="Export Records" id="page12" class=" ">
+<ion-content padding="true" class="has-header">
+<ion-list id="importRecords-list7" class=" ">
+    <label class = "item item-input item-select item-light">
+        <div class = "input-label">
+            Select account
+        </div>
+        
+        <select name="selected_account" ng-model="ExportRecordsCtrl.properties.selected_account"
+            ng-options="rec.accounts.account_number for rec in ExportRecordsCtrl.properties.export_records">
+        </select>
+        
+    </label>
+    </ion-list>
+<form id="exportRecords-form10" class="list ">
+    <ion-item class="item-divider " id="exportRecords-list-item-divider4">Export Options</ion-item>
+    <ion-radio ng-repeat="item in ExportRecordsCtrl.properties.exportOptions"
+    ng-value="item.value"
+    ng-checked="item.selected"
+    ng-model="ExportRecordsCtrl.properties.selectedExportOption">
+    {{ item.text }}
+    </ion-radio>
+</form>
+<form id="exportRecords-form11" class="list ">
+    <ion-radio ng-repeat="item in ExportRecordsCtrl.properties.formatOptions"
+        ng-value="item.value"
+        ng-checked="item.selected"
+        ng-model="ExportRecordsCtrl.properties.selectedFormatOption">
+        {{ item.text }}
+    </ion-radio>
+    
+</form>
+<button id="exportRecords-button11" class=" button button-calm  button-block " 
+ng-click="ExportRecordsCtrl.actions.exportData()">Export</button>
+</ion-content>
+</ion-view>
+        <!-- ng-change="ExportRecordsCtrl.actions.selectedFormatOption(item)"
+    ng-change="ExportRecordsCtrl.actions.selectedExportOption(item)" -->
