@@ -13,8 +13,8 @@ angular.module('app.controllers', [])
         doUpdate: function() {
             deploy.download().then(function() {
                 // Extract the updates
-                    ctrl.properties.updatesField = 'Updates downloaded';
-                    $scope.$apply();
+                ctrl.properties.updatesField = 'Updates downloaded';
+                $scope.$apply();
                 deploy.extract().then(function() {
                     // Load the updated version
                     ctrl.properties.updatesField = 'Updates extracted';

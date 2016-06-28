@@ -335,7 +335,7 @@
 			"file": "/Users/dev/Budget_App/package.json",
 			"settings":
 			{
-				"buffer_size": 738,
+				"buffer_size": 639,
 				"line_ending": "Unix"
 			}
 		},
@@ -348,18 +348,21 @@
 			}
 		},
 		{
-			"file": "/Users/dev/BudgetApp/www/js/appOld.js",
+			"contents": "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"utf-8\">\n        <meta name=\"viewport\" content=\"initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width\">\n        <meta http-equiv=\"Content-Security-Policy\" content=\"default-src * \">\n        <title></title>\n        \n        \n        <script src=\"lib/jquery/dist/jquery.min.js\"></script>\n        <script src=\"lib/ionic/js/ionic.bundle.js\"></script>\n        <script src=\"lib/firebase/firebase.js\"></script>\n        <script src=\"lib/angularfire/dist/angularfire.js\"></script>\n        <!-- <script src=\"lib/ngstorage/ngStorage.js\"></script> -->\n        <!-- cordova script (this will be a 404 during development) -->\n        <script src=\"lib/ngCordova/dist/ng-cordova.js\"></script>\n        <link rel='stylesheet' href='https://cdn.firebase.com/libs/firechat/2.0.1/firechat.min.css' />\n        <script src='https://cdn.firebase.com/libs/firechat/2.0.1/firechat.min.js'></script>\n        <script>\n        // Initialize Firebase\n        var config = {\n        apiKey: \"AIzaSyDoLE9hmM-S5BA9btNur2dOjGelS4HEIxo\",\n        authDomain: \"budgetapp-f972b.firebaseapp.com\",\n        databaseURL: \"https://budgetapp-f972b.firebaseio.com\",\n        storageBucket: \"\",\n        };\n        firebase.initializeApp(config);\n        </script>\n        \n        <script src=\"cordova.js\"></script>\n        <script lang=\"javascript\" src=\"lib/js-xlsx/dist/jszip.js\"></script>\n        <script lang=\"javascript\" src=\"lib/js-xlsx/dist/cpexcel.js\"></script>\n        <script src=\"lib/js-xlsx/xlsx.js\"></script>\n        <script src=\"lib/FileSaver.js\"></script>\n        <!--\n        <script lang=\"javascript\" src=\"js/js-xlsx/dist/xlsx.full.min.js\"></script>\n        <script lang=\"javascript\" src=\"js/js-xlsx/dist/xlsx.full.min.map\"></script> -->\n        <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above\n        <link href=\"css/ionic.app.css\" rel=\"stylesheet\">\n        -->\n        \n        <link href=\"css/ionic.app.css\" rel=\"stylesheet\">\n        <link href=\"css/importRecords.css\" rel=\"stylesheet\">\n        \n        <style type=\"text/css\">\n        .platform-ios .manual-ios-statusbar-padding{\n        padding-top:20px;\n        }\n        .manual-remove-top-padding{\n        padding-top:0px;\n        }\n        .manual-remove-top-padding .scroll{\n        padding-top:0px !important;\n        }\n        ion-list.manual-list-fullwidth div.list, .list.card.manual-card-fullwidth {\n        margin-left:-10px;\n        margin-right:-10px;\n        }\n        ion-list.manual-list-fullwidth div.list > .item, .list.card.manual-card-fullwidth > .item {\n        border-radius:0px;\n        border-left:0px;\n        border-right: 0px;\n        }\n        </style>\n        <script src=\"js/app.js\"></script>\n        <script src=\"js/controllers.js\"></script>\n        <script src=\"js/routes.js\"></script>\n        <script src=\"js/services.js\"></script>\n        <script src=\"js/directives.js\"></script>\n        <!-- Only required for Tab projects w/ pages in multiple tabs\n        <script src=\"lib/ionicuirouter/ionicUIRouter.js\"></script>\n        -->\n    </head>\n    <body ng-app=\"app\" animation=\"slide-left-right-ios7\">\n        <div>\n            <ion-side-menus enable-menu-with-back-views=\"false\" data-componentid=\"side-menu21\">\n            <ion-side-menu-content>\n            <ion-nav-bar class=\"bar-stable\">\n            <ion-nav-back-button></ion-nav-back-button>\n            <ion-nav-buttons side=\"left\">\n            <button class=\"button button-icon button-clear ion-navicon\" menu-toggle=\"left\"></button>\n            </ion-nav-buttons>\n            </ion-nav-bar>\n            <ion-nav-view></ion-nav-view>\n            </ion-side-menu-content>\n            <ion-side-menu side=\"left\" id=\"side-menu21\">\n            <ion-header-bar class=\"bar-stable\">\n            <div class=\"title\">Menu</div>\n            </ion-header-bar>\n            <ion-content padding=\"false\" class=\"side-menu-left has-header\">\n            <ion-list id=\"menu-list2\" class=\" \" data-componentid=\"list2\">\n            <ion-item id=\"menu-list-item12\" ui-sref=\"login\" menu-close=\"true\" class=\"  \" data-componentid=\"list-item12\">Login</ion-item>\n            <ion-item id=\"menu-list-item26\" ui-sref=\"tabsController.financialStatus\" menu-close=\"\" class=\"  \" data-componentid=\"list-item26\">Financial Status</ion-item>\n            <ion-item id=\"menu-list-item27\" ui-sref=\"tabsController.canIBuy\" menu-close=\"\" class=\"  \" data-componentid=\"list-item27\">Can I Buy</ion-item>\n            <ion-item id=\"menu-list-item23\" ui-sref=\"importRecords\" menu-close=\"\" class=\"  \" data-componentid=\"list-item23\">Import Records</ion-item>\n            <ion-item id=\"menu-list-item13\" ui-sref=\"exportRecords\" menu-close=\"\" class=\"  \" data-componentid=\"list-item13\">Export Records</ion-item>\n            <ion-item id=\"menu-list-item14\" ui-sref=\"backup\" menu-close=\"\" class=\"  \" data-componentid=\"list-item14\">Backup Records</ion-item>\n            <ion-item id=\"menu-list-item17\" ui-sref=\"recordDetails\" menu-close=\"\" class=\"  \" data-componentid=\"list-item17\">Detail Records</ion-item>\n            <ion-item id=\"menu-list-item16\" ui-sref=\"categories\" menu-close=\"\" class=\"  \" data-componentid=\"list-item16\">Categories</ion-item>\n            <ion-item id=\"menu-list-item15\" ui-sref=\"settings\" menu-close=\"\" class=\"  \" data-componentid=\"list-item15\">Settings</ion-item>\n            <ion-item id=\"menu-list-item24\" ui-sref=\"logout\" class=\"  \" data-componentid=\"list-item24\">Logout</ion-item>\n            </ion-list>\n            </ion-content>\n            </ion-side-menu>\n            </ion-side-menus>\n        </div>\n    </body>\n</html>",
+			"file": "/Users/dev/BudgetApp/www/index.html",
+			"file_size": 5489,
+			"file_write_time": 131104832900000000,
 			"settings":
 			{
-				"buffer_size": 974,
+				"buffer_size": 5633,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/Users/dev/BudgetApp/www/index.html",
+			"file": "/Users/dev/BudgetApp/scss/ionic.app.scss",
 			"settings":
 			{
-				"buffer_size": 5410,
+				"buffer_size": 826,
 				"line_ending": "Unix"
 			}
 		}
@@ -439,11 +442,14 @@
 	"expanded_folders":
 	[
 		"/Users/dev/BudgetApp",
-		"/Users/dev/BudgetApp/platforms",
-		"/Users/dev/BudgetApp/platforms/android"
+		"/Users/dev/BudgetApp/platforms/android/CordovaLib",
+		"/Users/dev/BudgetApp/scss",
+		"/Users/dev/BudgetApp/www",
+		"/Users/dev/BudgetApp/www/css"
 	],
 	"file_history":
 	[
+		"/Users/dev/BudgetApp/www/js/appOld.js",
 		"/Users/dev/Budget_App/keys.keys",
 		"/Users/dev/Budget_App/ionic.project",
 		"/Users/dev/BudgetApp/wwwOld/README.md",
@@ -562,7 +568,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 738,
+						"buffer_size": 639,
 						"regions":
 						{
 						},
@@ -634,7 +640,86 @@
 								"bh_unmatched_close",
 								"bh_unmatched_content"
 							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										637,
+										638
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										0,
+										1
+									]
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
 							"git_savvy.file_path": "/Users/dev/Budget_App/package.json",
+							"git_savvy.repo_path": "/Users/dev/Budget_App",
 							"syntax": "Packages/JavaScript Ultimate/JSON.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
@@ -724,6 +809,74 @@
 								"bh_unmatched_close",
 								"bh_unmatched_content"
 							],
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"open":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
 							"git_savvy.file_path": "/Users/dev/BudgetApp/www/js/app.js",
 							"syntax": "Packages/JavaScript Ultimate/JavaScript (DOM).tmLanguage",
 							"tab_size": 2,
@@ -738,19 +891,19 @@
 				},
 				{
 					"buffer": 2,
-					"file": "/Users/dev/BudgetApp/www/js/appOld.js",
+					"file": "/Users/dev/BudgetApp/www/index.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 974,
+						"buffer_size": 5633,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								970,
-								970
+								4611,
+								4611
 							]
 						],
 						"settings":
@@ -814,13 +967,91 @@
 								"bh_unmatched_close",
 								"bh_unmatched_content"
 							],
-							"git_savvy.file_path": "/Users/dev/BudgetApp/www/js/appOld.js",
-							"syntax": "Packages/JavaScript Ultimate/JavaScript (DOM).tmLanguage",
-							"tab_size": 2,
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										4615,
+										4616
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										4603,
+										4604
+									]
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"git_savvy.file_path": "/Users/dev/BudgetApp/www/index.html",
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 176.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -828,36 +1059,40 @@
 				},
 				{
 					"buffer": 3,
-					"file": "/Users/dev/BudgetApp/www/index.html",
-					"semi_transient": false,
+					"file": "/Users/dev/BudgetApp/scss/ionic.app.scss",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 5410,
+						"buffer_size": 826,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								460,
-								460
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"open":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
 							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
@@ -868,11 +1103,36 @@
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
 								"bh_double_quote",
 								"bh_double_quote_center",
 								"bh_double_quote_open",
 								"bh_double_quote_close",
 								"bh_double_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
@@ -882,32 +1142,10 @@
 								"bh_default_center",
 								"bh_default_open",
 								"bh_default_close",
-								"bh_default_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content"
+								"bh_default_content"
 							],
-							"git_savvy.file_path": "/Users/dev/BudgetApp/www/index.html",
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"git_savvy.file_path": "/Users/dev/BudgetApp/scss/ionic.app.scss",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,

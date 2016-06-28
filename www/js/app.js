@@ -6,12 +6,60 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
-  'app.directives', 'ngCordova', 'firebase', 'ngCordovaOauth','ionic.service.core'
+  'app.directives', 'ngCordova', 'firebase', 'ngCordovaOauth', 'ionic.service.core'
 ])
 
 
-.run(['$ionicPlatform', '$firebaseAuth', 'Auth', '$state', function($ionicPlatform, $firebaseAuth, Auth, $state) {
+.run(['$ionicPlatform', '$firebaseAuth', 'Auth', '$state', '$cordovaNetwork', '$rootScope', function($ionicPlatform, $firebaseAuth, Auth, $state, $cordovaNetwork, $rootScope) {
   $ionicPlatform.ready(function() {
+    $rootScope.$watch(function() {
+      return $rootScope.online;
+    }, function() {
+      if ($rootScope.online === false)
+        console.log("offline") //This is consoled only once
+      else console.log("online")
+
+      //var browser = angular.injector(['app']).get('$cordovaInAppBrowser');
+      //console.log('browser:' + browser);
+      // $rootScope.urlchange = function($url, $rootScope) {
+      //   cordova.InAppBrowser.open($url, "_blank", "location=no", "clearcache: no", "toolbar: no");
+      // }
+      // $rootScope.urlchange('http://www.cnn.com', $rootScope);
+      
+      $rootScope.$on('$cordovaInAppBrowser:loadstart', function(e, event) {
+        console.log('inappbrowser load start');
+      });
+
+      $rootScope.$on('$cordovaInAppBrowser:loaderror', function(e, event) {
+        console.log('inappbrowser load error' + e);
+      });
+
+      // if ($cordovaNetwork.getNetwork) {
+      //   var type = $cordovaNetwork.getNetwork()
+
+      //   var isOnline = $cordovaNetwork.isOnline()
+
+      //   var isOffline = $cordovaNetwork.isOffline()
+      //   console.log("cordovaNetwork: " + type);
+      //   console.log("cordovaNetwork isOnline: " + isOnline);
+      //   console.log("cordovaNetwork isOffline: " + isOffline);
+      // }
+
+      // listen for Online event
+      $rootScope.$on('$cordovaNetwork:online', function(event, networkState) {
+        var onlineState = networkState;
+        console.log('Connection type: ' + onlineState);
+      })
+
+      // listen for Offline event
+      $rootScope.$on('$cordovaNetwork:offline', function(event, networkState) {
+        var offlineState = networkState;
+        console.log('Connection type: ' + onlineState);
+      })
+
+
+    });
+
 
     function checkConnection() {
 
@@ -28,21 +76,21 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
         states[Connection.NONE] = 'No network connection';
 
         console.log('Connection type: ' + states[networkState]);
-      }, 750);
+      }, 1750);
     }
 
-    checkConnection();
+    //checkConnection();
 
-    document.addEventListener("offline", onOffline, false);
+    // document.addEventListener("offline", onOffline, false);
 
-    function onOffline() {
-      alert('offline');
-    }
-    document.addEventListener("online", onOnline, false);
+    // function onOffline() {
+    //   alert('offline');
+    // }
+    // document.addEventListener("online", onOnline, false);
 
-    function onOnline() {
-      alert('online');
-    }
+    // function onOnline() {
+    //   alert('online');
+    // }
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     var auth = $firebaseAuth();
