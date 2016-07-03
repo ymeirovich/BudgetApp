@@ -84,7 +84,7 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('loginCtrl', ['$scope', '$state', '$firebaseAuth', 'Auth', '$cordovaOauth', '$firebase', function($scope, $state, $firebaseAuth, Auth, $cordovaOauth, $firebase) {
+.controller('loginCtrl', ['$scope', '$state', '$firebaseAuth', 'Auth', '$cordovaOauth', '$firebase', '$ionicLoading', '$rootScope', function($scope, $state, $firebaseAuth, Auth, $cordovaOauth, $firebase, $ionicLoading, $rootScope) {
     var ctrl = this;
     ctrl.Auth = Auth;
     ctrl.$firebase = $firebase;
@@ -110,6 +110,7 @@ angular.module('app.controllers', [])
         //     });288945686187-gcul78gqfuhridvv0tr05sr9l7rufv76.apps.googleusercontent.com
         //788382346450.apps.googleusercontent.com
         //288945686187-mlma2co6ukfcu4ugnn3mr2cakar3rnpi.apps.googleusercontent.com
+        $ionicLoading.show();
         $cordovaOauth.google("788382346450.apps.googleusercontent.com", ["email"], {
             redirect_uri: "https://budgetapp-f972b.firebaseapp.com/__/auth/handler"
         }).then(function(result) {
@@ -119,13 +120,17 @@ angular.module('app.controllers', [])
                 .then(function(authData) {
                     console.log("Logged in as:", authData.uid);
                     Auth.currentUserId = authData;
+
+                    $ionicLoading.hide();
                 }).catch(function(error) {
                     console.log("Authentication failed:", error);
+                    $ionicLoading.hide();
                 });
-            console.log(result)
+            console.log(result);
         }, function(error) {
             alert(error);
             console.log(error);
+            $ionicLoading.hide();
         });
 
 
@@ -567,4 +572,373 @@ angular.module('app.controllers', [])
         }
     }
     ctrl.actions.init();
+}])
+
+
+.controller('MessagesCtrl', ['Auth', '$rootScope', '$scope', '$filter', '$window', '$timeout', '$ionicModal', '$ionicLoading', 'User', 'Users', 'Room', 'Rooms', 'Messages', function(Auth, $rootScope, $scope, $filter, $window, $timeout, $ionicModal, $ionicLoading, User, Users, Room, Rooms, Messages) {
+
+    $scope.$watch(Auth.currentUserId, function(newValue, oldValue) {
+        $scope.currentUser = Auth.currentUserId;
+        if (angular.isDefined(Auth.currentUserId)) {
+            $scope.rooms = {};
+
+            // if (!newValue) return;
+
+            $rootScope.currentUser.$loaded().then(function(data) {
+                // Initialize room list
+                angular.forEach(data.rooms, function(value, key) {
+                    if (value) {
+                        if (!$scope.rooms[key]) {
+                            $scope.rooms[key] = Room(key);
+                        }
+                    }
+                });
+
+                // Update room list
+                $rootScope.currentUser.$watch(function(event) {
+                    // Added
+                    angular.forEach($rootScope.currentUser.rooms, function(value, key) {
+                        if (value) {
+                            if (!$scope.rooms[key]) {
+                                $scope.rooms[key] = Room(key);
+                            }
+                        }
+                    });
+
+                    // Removed
+                    angular.forEach($scope.rooms, function(value, key) {
+                        if (!$rootScope.currentUser.rooms || !$rootScope.currentUser.rooms[key]) {
+                            $scope.rooms[key].$destroy();
+                            delete $scope.rooms[key];
+                        }
+                    });
+                });
+            });
+        }
+
+    });
+
+    //--------------------------------------
+    //  New Message modal
+    //--------------------------------------
+
+    $scope.newMessage = {
+        'to': [],
+        'subject': '',
+        'content': ''
+    };
+
+    $ionicModal.fromTemplateUrl('new-message-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.newMessageModal = modal;
+    });
+
+    $scope.sendMessage = function() {
+        $ionicLoading.show();
+        $scope.newMessageModal.hide();
+
+        var members = {};
+        members[$rootScope.currentUser.$id] = true;
+        angular.forEach($scope.newMessage.to, function(value) {
+            members[value.$id] = true;
+        });
+
+        Rooms.$add({
+            'members': members,
+            'subject': $scope.newMessage.subject,
+            'timestamp': Math.round(new Date().getTime() / 1000) //$window.Firebase.ServerValue.TIMESTAMP
+        }).then(function(ref) {
+            var roomId = ref.key;
+
+            Messages(roomId).$add({
+                'from': $rootScope.currentUser.$id,
+                'content': $scope.newMessage.content,
+                'timestamp': Math.round(new Date().getTime() / 1000) //$window.Firebase.ServerValue.TIMESTAMP
+            }).then(function() {
+                angular.forEach(members, function(value, key) {
+                    User(key).$loaded().then(function(data) {
+                        if (!data.rooms) data.rooms = {};
+                        data.rooms[roomId] = true;
+                        data.$save();
+                    });
+                });
+
+                angular.forEach($scope.users, function(user) {
+                    user.selected = false;
+                });
+
+                $scope.newMessage.to = null;
+                $scope.newMessage.subject = '';
+                $scope.newMessage.content = '';
+
+                $ionicLoading.hide();
+            });
+        });
+    };
+
+    $scope.cancelSendMessage = function() {
+        angular.forEach($scope.users, function(user) {
+            user.selected = false;
+        });
+
+        $scope.newMessage.to = null;
+        $scope.newMessage.subject = '';
+        $scope.newMessage.content = '';
+
+        $scope.newMessageModal.hide();
+    };
+
+    //--------------------------------------
+    //  Users modal
+    //--------------------------------------
+
+    $scope.users = Users;
+    $scope.users = [{
+        $id:'Fn1Wu4uhsxb3jJnWU8nRho0Eyet1',
+        name:'ymeirovich@gmail.com',
+        selected:false
+    },{
+        $id:'pawMdGd9L8eW9bmqjfhhW9R3B2d2',
+        name:'modiin59ronny@gmail.com',
+        selected:false
+    },{
+        $id:'meMjX57exDW3EeUE2LM8FAb5kny2',
+        name:'paamdemo@gmail.com',
+        selected:false
+    }];
+
+    $ionicModal.fromTemplateUrl('users-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.usersModal = modal;
+    });
+
+    $scope.cancelSelectUsers = function() {
+        angular.forEach($scope.users, function(user) {
+            user.selected = false;
+        });
+
+        $scope.newMessage.to = null;
+
+        $scope.usersModal.hide();
+
+    };
+
+    $scope.doneSeletUsers = function() {
+        $scope.newMessage.to = $filter('filter')($scope.users, {
+            'selected': true
+        }, true);
+
+        $scope.usersModal.hide();
+    };
+
+    // Cleanup the modals & popover when view destroyed
+    $scope.$on('$destroy', function() {
+        $scope.newMessageModal.remove();
+        $scope.usersModal.remove();
+    });
+
+}])
+
+.controller('RoomCtrl', ['$rootScope', '$scope', '$state', '$stateParams', '$filter', '$window', '$timeout', '$ionicPopover', 
+    '$ionicPopup', '$ionicModal', '$ionicScrollDelegate', '$ionicLoading', 'User', 'Users', 'Room', 'Message', 'Messages'
+    ,function($rootScope, $scope, $state, $stateParams, $filter, $window, 
+        $timeout, $ionicPopover, $ionicPopup, $ionicModal, $ionicScrollDelegate, 
+        $ionicLoading, User, Users, Room, Message, Messages) {
+
+    // Show loading indicator untill all message loaded
+    $ionicLoading.show();
+
+    $scope.room = Room($stateParams.roomId);
+    $scope.messages = Messages($stateParams.roomId);
+    $scope.members = {};
+
+    $scope.room.$loaded().then(function(data) {
+        angular.forEach(data.members, function(value, key) {
+            if (value) {
+                if (!$scope.members[key]) {
+                    $scope.members[key] = User(key);
+                }
+            }
+        });
+
+        $scope.room.$watch(function(event) {
+            angular.forEach($scope.room.members, function(value, key) {
+                if (value) {
+                    if (!$scope.members[key]) {
+                        $scope.members[key] = User(key);
+                    }
+                }
+            })
+        });
+    });
+
+    $scope.messages.$loaded().then(function(data) {
+
+        // For removed user
+        angular.forEach(data, function(value, key) {
+            if (!$scope.members[value.from]) {
+                $scope.members[value.from] = User(value.from);
+            }
+        });
+
+        $timeout(function() {
+            $ionicScrollDelegate.scrollBottom(true);
+        }, 300);
+
+        $ionicLoading.hide();
+
+        $scope.messages.$watch(function(event) {
+            if (Math.abs($ionicScrollDelegate.getScrollView().getScrollMax().top - $ionicScrollDelegate.getScrollPosition().top) < 10) {
+                $ionicScrollDelegate.scrollBottom(true);
+            }
+        });
+    });
+
+    //--------------------------------------
+    //  Reply message
+    //--------------------------------------
+
+    $scope.replyMessage = {
+        content: ''
+    };
+
+    $scope.sendReplyMessage = function() {
+        $scope.messages.$add({
+            'from': $rootScope.currentUser.$id,
+            'content': $scope.replyMessage.content,
+            'timestamp': Math.round(new Date().getTime() / 1000) //$window.Firebase.ServerValue.TIMESTAMP
+        }).then(function() {
+            $scope.room.timestamp = Math.round(new Date().getTime() / 1000) //$window.Firebase.ServerValue.TIMESTAMP;
+            $scope.room.$save();
+
+            $ionicScrollDelegate.scrollBottom(true);
+        });
+
+        $scope.replyMessage.content = '';
+
+        var messageList = document.getElementById('messageList').getElementsByClassName('list')[0];
+        var replyFooter = document.getElementById("replyFooter");
+        messageList.style.paddingBottom = '';
+        replyFooter.style.height = '';
+    };
+
+    $scope.updateReplayTextArea = function() {
+        var messageList = document.getElementById('messageList').getElementsByClassName('list')[0];
+        var replyFooter = document.getElementById("replyFooter");
+        var replyTextarea = document.getElementById("replyTextarea");
+        replyFooter.style.height = replyTextarea.scrollHeight + 10 + "px";
+        messageList.style.paddingBottom = replyTextarea.scrollHeight + 10 + "px";
+    }
+
+    //--------------------------------------
+    //  Menu popover
+    //--------------------------------------
+
+    $ionicPopover.fromTemplateUrl('menu-popover.html', {
+        scope: $scope,
+    }).then(function(popover) {
+        $scope.menuPopover = popover;
+    });
+
+    $scope.editRoom = function() {
+        $scope.menuPopover.hide();
+
+        $scope.editRoomData = {
+            'subject': $scope.room.subject
+        };
+
+        $ionicPopup.show({
+            template: '<input type="text" ng-model="editRoomData.subject">',
+            title: 'Title of Room',
+            scope: $scope,
+            buttons: [{
+                text: 'Cancel'
+            }, {
+                text: '<b>Save</b>',
+                type: 'button-positive',
+                onTap: function(e) {
+                    if (!$scope.editRoomData.subject) {
+                        //don't allow the user to close unless he enters wifi password
+                        e.preventDefault();
+                    } else {
+                        $scope.room.subject = $scope.editRoomData.subject;
+                        $scope.room.$save();
+                    }
+                }
+            }]
+        });
+    };
+
+    $scope.invitePeople = function() {
+        $scope.menuPopover.hide();
+        $scope.invitePeopleModal.show();
+    };
+
+    $scope.exit = function() {
+        delete $scope.room.members[$rootScope.currentUser.$id];
+        $scope.room.$save();
+
+        delete $scope.currentUser.rooms[$scope.room.$id];
+        $rootScope.currentUser.$save();
+
+        if (Object.keys($scope.room.members).length === 0) {
+            Message($scope.room.$id).$remove();
+            $scope.room.$remove();
+        }
+
+        $scope.menuPopover.hide();
+        $state.go('main.messages');
+    };
+
+    //--------------------------------------
+    //  Invite People modal
+    //--------------------------------------
+
+    $scope.users = Users;
+
+    $ionicModal.fromTemplateUrl('invite-people-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(popover) {
+        $scope.invitePeopleModal = popover;
+    });
+
+    $scope.cancelInvitePeople = function() {
+        angular.forEach($scope.users, function(user) {
+            user.selected = false;
+        });
+
+        $scope.invitePeopleModal.hide();
+    };
+
+    $scope.doneInvitePeople = function() {
+        angular.forEach($scope.users, function(value) {
+            if (value.selected) {
+                $scope.room.members[value.$id] = true;
+                $scope.room.$save();
+
+                var user = User(value.$id);
+                user.$loaded().then(function() {
+                    if (!user.rooms) user.rooms = {};
+                    user.rooms[$scope.room.$id] = true;
+                    user.$save();
+                });
+
+                value.selected = false;
+            }
+        });
+
+        $scope.invitePeopleModal.hide();
+    };
+
+    // Cleanup the modal & popover when view destroyed
+    $scope.$on('$destroy', function() {
+        $scope.menuPopover.remove();
+        $scope.invitePeopleModal.remove();
+    });
+
 }]);

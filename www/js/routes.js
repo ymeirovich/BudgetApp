@@ -148,6 +148,19 @@ angular.module('app.routes', [])
     controllerAs:'AccountCtrl'
   })
 
+
+    .state('messages', {
+      url: '/messages',
+      templateUrl: 'templates/firechat/messages.html',
+      controller: 'MessagesCtrl'
+    })
+
+    .state('room', {
+      url: '/messages/room/:roomId',
+      templateUrl: 'templates/firechat/room.html',
+      controller: 'RoomCtrl'
+    })
+
   $urlRouterProvider.otherwise('/main/status')
 
 

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <meta charset="utf-8" http-equiv="Content-Security-Policy" content="default-src *; style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos; https://budgetapp-f972b.firebaseio.com https://s-usc1c-nss-102.firebaseio.com https://www.googleapis.com ;  ">
+        <meta charset="utf-8" http-equiv="Content-Security-Policy" content="default-src *; style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos; https://budgetapp-f972b.firebaseio.com https://s-usc1c-nss-102.firebaseio.com https://www.googleapis.com http://apis.google.com http://localhost:35729;  ">
         <title></title>
         
         
@@ -20,7 +20,6 @@ style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos
         <!-- cordova script (this will be a 404 during development) -->
         <script src="lib/ngCordova/dist/ng-cordova.js"></script>
         <script src="lib/ng-cordova-oauth/dist/ng-cordova-oauth.min.js"></script>
-        <script src="lib/firechat/firechat.min.js"></script>
         <script>
         // Initialize Firebase
         var config = {
@@ -31,8 +30,10 @@ style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos
                 storageBucket: "budgetapp-f972b.appspot.com",
             };
             firebase.initializeApp(config);
+            window.Firebase = firebase;
         </script>
         
+        <script src="lib/firechat/firechat.min.js"></script> 
         <!-- <script src="cordova.js"></script>
         <script src="cordova_plugins.js"></script> -->
         <script lang="javascript" src="lib/js-xlsx/dist/jszip.js"></script>
@@ -71,11 +72,13 @@ style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos
         border-right: 0px;
         }
         </style>
+        <script src="js/firechatServices.js"></script>
         <script src="js/app.js"></script>
         <script src="js/controllers.js"></script>
         <script src="js/routes.js"></script>
         <script src="js/services.js"></script>
         <script src="js/directives.js"></script>
+        <script src="js/constants.js"></script>
         <!-- Only required for Tab projects w/ pages in multiple tabs
         <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
         -->
@@ -99,6 +102,7 @@ style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos
             <ion-content padding="false" class="side-menu-left has-header">
             <ion-list id="menu-list2" class=" " data-componentid="list2">
             <ion-item id="menu-list-item12" ui-sref="login" menu-close="true" class="  " data-componentid="list-item12">Login</ion-item>
+            <ion-item id="menu-list-item28" ui-sref="messages" menu-close="true" class="  " data-componentid="list-item28">Chat</ion-item>
             <ion-item id="menu-list-item26" ui-sref="tabsController.financialStatus" menu-close="" class="  " data-componentid="list-item26">Financial Status</ion-item>
             <ion-item id="menu-list-item27" ui-sref="tabsController.canIBuy" menu-close="" class="  " data-componentid="list-item27">Can I Buy</ion-item>
             <ion-item id="menu-list-item23" ui-sref="importRecords" menu-close="" class="  " data-componentid="list-item23">Import Records</ion-item>
