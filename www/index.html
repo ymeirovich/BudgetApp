@@ -3,19 +3,18 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <meta charset="utf-8" http-equiv="Content-Security-Policy" content="default-src *; style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos; https://budgetapp-f972b.firebaseio.com https://s-usc1c-nss-102.firebaseio.com https://www.googleapis.com http://apis.google.com http://localhost:35729;  ">
+        <meta charset="utf-8" http-equiv="Content-Security-Policy" content="default-src *; style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos; https://apis.google.com https://budgetapp-f972b.firebaseio.com http://10.0.0.5:35729 https://s-usc1c-nss-102.firebaseio.com https://www.googleapis.com http://apis.google.com http://localhost:35729  http://10.0.0.5:8100 ; connect-src * 'self' http://10.0.0.5:35729 http://10.0.0.5:8100">
         <title></title>
         
-        
         <script src="lib/jquery/dist/jquery.min.js"></script>
+        <script src="http://10.0.0.5:35729/livereload.js?snipver=1"></script>
         <script src="lib/ionic/js/ionic.bundle.js"></script>
         <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
         <script src="lib/ionic-service-core/ionic-core.js"></script>
-
         <script src="lib/firebase/firebase.js"></script>
         <script src="lib/angularfire/dist/angularfire.js"></script>
-        <!-- <script src="lib/ngstorage/ngStorage.js">0.0.8</script> 
-style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos;
+        <!-- <script src="lib/ngstorage/ngStorage.js">0.0.8</script>
+        style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos;
         -->
         <!-- cordova script (this will be a 404 during development) -->
         <script src="lib/ngCordova/dist/ng-cordova.js"></script>
@@ -23,17 +22,17 @@ style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos
         <script>
         // Initialize Firebase
         var config = {
-                apiKey: "AIzaSyDoLE9hmM-S5BA9btNur2dOjGelS4HEIxo",
-                //apiKey:"AIzaSyB75vkivQNnUDaTFRsQ8KgugJxshB7yOoc",
-                authDomain: "budgetapp-f972b.firebaseapp.com",
-                databaseURL: "https://budgetapp-f972b.firebaseio.com",
-                storageBucket: "budgetapp-f972b.appspot.com",
-            };
-            firebase.initializeApp(config);
-            window.Firebase = firebase;
+        apiKey: "AIzaSyDoLE9hmM-S5BA9btNur2dOjGelS4HEIxo",
+        //apiKey:"AIzaSyB75vkivQNnUDaTFRsQ8KgugJxshB7yOoc",
+        authDomain: "budgetapp-f972b.firebaseapp.com",
+        databaseURL: "https://budgetapp-f972b.firebaseio.com",
+        storageBucket: "budgetapp-f972b.appspot.com",
+        };
+        firebase.initializeApp(config);
+        window.Firebase = firebase;
         </script>
         
-        <script src="lib/firechat/firechat.min.js"></script> 
+        <script src="lib/firechat/firechat.min.js"></script>
         <!-- <script src="cordova.js"></script>
         <script src="cordova_plugins.js"></script> -->
         <script lang="javascript" src="lib/js-xlsx/dist/jszip.js"></script>
@@ -101,7 +100,8 @@ style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos
             </ion-header-bar>
             <ion-content padding="false" class="side-menu-left has-header">
             <ion-list id="menu-list2" class=" " data-componentid="list2">
-            <ion-item id="menu-list-item12" ui-sref="login" menu-close="true" class="  " data-componentid="list-item12">Login</ion-item>
+            <ion-item id="menu-list-item12" ui-sref="login" menu-close="true" class="  " data-componentid="list-item12">Login
+            </ion-item>
             <ion-item id="menu-list-item28" ui-sref="messages" menu-close="true" class="  " data-componentid="list-item28">Chat</ion-item>
             <ion-item id="menu-list-item26" ui-sref="tabsController.financialStatus" menu-close="" class="  " data-componentid="list-item26">Financial Status</ion-item>
             <ion-item id="menu-list-item27" ui-sref="tabsController.canIBuy" menu-close="" class="  " data-componentid="list-item27">Can I Buy</ion-item>

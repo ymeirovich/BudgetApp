@@ -9,7 +9,7 @@ angular.module('app.directives', [])
             // If enter key is pressed
             if (keyCode === 13) {
                 scope.$apply(function() {
-                        // Evaluate the expression
+                    // Evaluate the expression
                     scope.$eval(attrs.ngEnterKey);
                 });
 
@@ -17,5 +17,12 @@ angular.module('app.directives', [])
             }
         });
     };
-});
+})
 
+.directive('ngFinishedLoading', ['$rootScope', function($rootScope) {
+    return function(scope, element, attrs) {
+        if (scope.$last) {
+            $rootScope.$broadcast('ngFinishedLoading','done');
+        }
+    };
+}]);

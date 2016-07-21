@@ -21,10 +21,11 @@
   },
   "cordovaPlugins": [
     "ionic-plugin-deploy",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-ace"
   ],
   "cordovaPlatforms": [
-    "ios",
-    "android"
+    "android",
+    "ios"
   ]
 }
