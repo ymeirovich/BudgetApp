@@ -3,15 +3,13 @@
         <div class="list card " id="financialStatus-card21">
             <ion-item class="item-avatar  " id="financialStatus-list-item4">
                 <img src="img/8uJEzlOTZCIXhFd7XZ52_financial_health_meter.jpg">
-                <h2>0.0.10 How am I doing today?</h2>
-                
-                <button class="button button-primary button-block" ng-if="!FinancialStatusCtrl.properties.updatesAvailable" 
-                ng-click="FinancialStatusCtrl.actions.checkForUpdates()">
+                <h2>v0.0.11 </h2>
+
+                <button class="button button-primary button-block" ng-if="!FinancialStatusCtrl.properties.updatesAvailable" ng-click="FinancialStatusCtrl.actions.checkForUpdates()">
                   Check for Updates 
                 </button>
                 <span class="" style="font-weight:bold; color:blue;" ng-bind="FinancialStatusCtrl.properties.updatesField"></span>
-                <button class="button button-stable button-block button-pulse" 
-                ng-if="FinancialStatusCtrl.properties.updatesAvailable" ng-click="FinancialStatusCtrl.actions.doUpdate()">
+                <button class="button button-stable button-block button-pulse" ng-if="FinancialStatusCtrl.properties.updatesAvailable" ng-click="FinancialStatusCtrl.actions.doUpdate()">
                   Download Update
                 </button>
             </ion-item>

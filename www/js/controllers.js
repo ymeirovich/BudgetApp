@@ -137,121 +137,122 @@ angular.module('app.controllers', [])
     };
 }])
 
-.controller('importRecordsCtrl', ['$scope', 'ExcelService', '$firebaseArray', 'Auth', 'BANK_PROFILES', function($scope, xlsvc, $firebaseArray, Auth, BANK_PROFILES) {
+.controller('importRecordsCtrl', ['$scope', 'ExcelService', '$firebaseArray', 'Auth', 'BANK_PROFILES',
+    function($scope, xlsvc, $firebaseArray, Auth, BANK_PROFILES) {
 
-    var ctrl = this;
-    var refImportRecs = firebase.database().ref().child("importRecords");
-    var refTransRecs = firebase.database().ref().child("transRecords");
-    ctrl.init = function init(argument) {
-        ctrl.watch.loggedIn();
-        ctrl.watch.openFile();
-        ctrl.watch.finishedLoading();
-    }
-    ctrl.properties = {
-        fileName: '',
-        account_type_ids: [],
-        import_records: $firebaseArray(refImportRecs),
-        selected_account: '',
-        loggedIn: false,
-        selectedAll: false,
-        BANK_PROFILES: BANK_PROFILES,
-        loading:false
-    }
-    ctrl.actions = {
-        changeSelectedAccount:function changeSelectedAccount () {
-            ctrl.properties.loading = true;
-        },
-        openFileDialog: function openFileDialog() {
-            if (!ctrl.properties.selected_bank_profile) {
-                alert('you must select an account type');
-                return false;
-            } else {
-                console.log('fire! $scope.openFileDialog()');
-                ionic.trigger('click', {
-                    target: document.getElementById('file')
-                });
-            }
-        },
-        moveRecords: function moveRecords() {
-            var oldRef = refImportRecs,
-                newRef = refTransRecs;
-            oldRef.once('value', function(snap) {
-                newRef.set(snap.val(), function(error) {
-                    if (!error) {
-                        oldRef.remove();
-                        ctrl.properties.fileName = '';
-                    } else if (typeof(console) !== 'undefined' && console.error) {
-                        console.error(error);
-                    }
-                });
-            });
-        },
-        deleteRecord: function deleteRecords(rec) {
-
-        },
-        deleteAllRecords: function deleteRecords() {
-            refImportRecs.remove(function(error) {
-                if (error) {
-                    console.log('Synchronization failed');
-                } else {
-                    console.log('Synchronization succeeded');
-                }
-            });
-            ctrl.properties.fileName = '';
-        },
-        checkAll: function checkall() {
-            var selectedAll = ctrl.properties.selectedAll;
-            if (selectedAll) {
-                selectedAll = true;
-            } else {
-                selectedAll = false;
-            }
-            angular.forEach(ctrl.properties.selected_account.accounts.records, function(item) {
-                item.Selected = selectedAll;
-            });
+        var ctrl = this;
+        var refImportRecs = firebase.database().ref().child("importRecords");
+        var refTransRecs = firebase.database().ref().child("transRecords");
+        ctrl.init = function init(argument) {
+            ctrl.watch.loggedIn();
+            ctrl.watch.openFile();
+            ctrl.watch.finishedLoading();
         }
-    }
-    ctrl.watch = {
-        loggedIn: function loggedIn(argument) {
-            $scope.$watch(function(argument) {
-                return Auth.firebaseAuth && Auth.firebaseAuth.$getAuth();
-            }, function function_name(authValue) {
-                if (authValue !== null) ctrl.properties.loggedIn = true
-                else ctrl.properties.loggedIn = false;
-            })
-        },
-        finishedLoading:function finishedLoading(){
-            $scope.$on('ngFinishedLoading',function (event, message) {
-                if(message==='done'){
-                    ctrl.properties.loading = false;
-                }
-            })
-        },
-        openFile: function openFile() {
-                angular.element('#file').on('change', function(event) {
-                    if(angular.isArray(ctrl.properties.import_records) && ctrl.properties.import_records.length>0){
-                        ctrl.actions.deleteAllRecords();
+        ctrl.properties = {
+            fileName: '',
+            account_type_ids: [],
+            import_records: $firebaseArray(refImportRecs),
+            trans_records: refTransRecs,
+            refImportRecs: refImportRecs,
+            refTransRecs: refTransRecs,
+            selected_account: '',
+            loggedIn: false,
+            selectedAll: false,
+            BANK_PROFILES: BANK_PROFILES,
+            loading: false,
+            uniqueRecords: []
+        }
+        ctrl.actions = {
+            changeSelectedAccount: function changeSelectedAccount() {
+                ctrl.properties.loading = true;
+            },
+            openFileDialog: function openFileDialog() {
+                var $file = $('#file');
+                $file.trigger('click');
+            },
+            moveRecords: function moveRecords() {
+                var oldRef = refImportRecs,
+                    newRef = refTransRecs;
+                oldRef.once('value', function(snap) {
+                    newRef.set(snap.val(), function(error) {
+                        if (!error) {
+                            oldRef.remove();
+                            ctrl.properties.fileName = '';
+                        } else if (typeof(console) !== 'undefined' && console.error) {
+                            console.error(error);
+                        }
+                    });
+                });
+            },
+            deleteRecord: function deleteRecords(rec) {
+
+            },
+            deleteAllRecords: function deleteRecords() {
+                refImportRecs.remove(function(error) {
+                    if (error) {
+                        console.log('Synchronization failed');
+                    } else {
+                        console.log('Synchronization succeeded');
                     }
-                    console.log('fire! angular#element change event');
-                    xlsvc.handleFile(event, $firebaseArray(refImportRecs), ctrl.properties.selected_bank_profile);
-                    var file = event.target.files[0];
-                    ctrl.properties.fileName = file.name;
-                    angular.element('#file').val(null);
-                    $scope.$apply();
+                });
+                ctrl.properties.fileName = '';
+            },
+            checkAll: function checkall() {
+                var selectedAll = ctrl.properties.selectedAll;
+                if (selectedAll) {
+                    selectedAll = true;
+                } else {
+                    selectedAll = false;
+                }
+                angular.forEach(ctrl.properties.selected_account, function(item) {
+                    item.Selected = selectedAll;
                 });
             }
-            // getTransRecords: function getTransRecords() {
-            //     $scope.$watch(function() {
-            //         return $localStorage.get('transRecords');
-            //     }, function getTransWatch(val) {
-            //         ctrl.properties.import_records = val;
-            //     })
-            // }
+        }
+        ctrl.watch = {
+            loggedIn: function loggedIn(argument) {
+                $scope.$watch(function(argument) {
+                    return Auth.firebaseAuth && Auth.firebaseAuth.$getAuth();
+                }, function function_name(authValue) {
+                    if (authValue !== null) ctrl.properties.loggedIn = true
+                    else ctrl.properties.loggedIn = false;
+                })
+            },
+            finishedLoading: function finishedLoading() {
+                $scope.$on('ngFinishedLoading', function(event, message) {
+                    if (message === 'done') {
+                        ctrl.properties.loading = false;
+                    }
+                })
+            },
+            openFile: function openFile() {
+
+                    angular.element('#file').on('change', function(event) {
+                        if (angular.isArray(ctrl.properties.import_records) && ctrl.properties.import_records.length > 0) {
+                            ctrl.actions.deleteAllRecords();
+                        }
+                        //console.log('fire! angular#element change event');
+                        xlsvc.handleFile(event, $firebaseArray(refImportRecs), ctrl.properties);
+                        //ctrl.properties.uniqueRecords = xlsvc.uniqueRecords;
+                        var file = event.target.files[0];
+                        ctrl.properties.fileName = file.name;
+                        angular.element('#file').val(null);
+                        $scope.$apply();
+                    });
+                }
+                // getTransRecords: function getTransRecords() {
+                //     $scope.$watch(function() {
+                //         return $localStorage.get('transRecords');
+                //     }, function getTransWatch(val) {
+                //         ctrl.properties.import_records = val;
+                //     })
+                // }
+        }
+
+        ctrl.init();
+
     }
-
-    ctrl.init();
-
-}])
+])
 
 .controller('backupCtrl', function($scope) {
 
@@ -299,7 +300,7 @@ angular.module('app.controllers', [])
             if (Auth.currentUserId !== null) {
                 if (angular.element('.ion-ios-checkmark').length > 0) { //edit operation
                     angular.element('.ion-ios-checkmark').removeClass('ion-ios-checkmark').addClass('ion-ios-plus');
-                    ctrl.actions.deleteCategories(ctrl.properties.currentRecord );
+                    ctrl.actions.deleteCategories(ctrl.properties.currentRecord);
                 } //new record
                 ctrl.properties.categoryStore.$add({
                     category: ctrl.properties.newCategory,

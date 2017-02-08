@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="org.Budgy.ExcelToJSON" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>ExcelToJSON</name>
+    <description>Converts Excel formatted data to JSON</description>
+    <js-module name="ExcelToJSON" src="www/ExcelToJSON.js">
+        <clobbers target="cordova.plugins.ExcelToJSON" />
+    </js-module>
+</plugin>
